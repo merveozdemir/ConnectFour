@@ -12,6 +12,6 @@ package connectfourserver;
  */
 public class ConnectFourServer {
     public static void main(String[] args) {
-        
+         Server.Start(2000);
     }
 }
