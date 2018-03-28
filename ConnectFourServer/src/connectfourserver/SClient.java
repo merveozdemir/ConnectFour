@@ -110,6 +110,13 @@ public class SClient {
                             //server bir player number belirler 1 veya 2
                             Server.Send(TheClient, received);
                             break;
+                        case Move:
+                            //rakibe hamle sayısının bilgisini verir
+                            Server.Send(TheClient.rival, received);
+                            break;
+                        case Turn:
+                            Server.Send(TheClient.rival, received);
+                            break;
                         case Bitis:
                             break;
 
@@ -195,7 +202,9 @@ public class SClient {
                         Message msg6 = new Message(Message.Message_Type.PlayerNum);
                         msg6.content = TheClient.rival.playerNum;
                         Server.Send(TheClient.rival, msg6);
+                      
                         
+
                         Message msg1 = new Message(Message.Message_Type.RivalConnected);
                         msg1.content = TheClient.name;
                         Server.Send(TheClient.rival, msg1);

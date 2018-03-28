@@ -19,19 +19,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 
-
 /**
  *
  * @author merve
  */
 class Listen extends Thread {
-    
+
     public void run() {
         //soket bağlı olduğu sürece dön
         while (Client.socket.isConnected()) {
-           
+
             try {
-               //mesaj gelmesini bloking olarak dinyelen komut
+                //mesaj gelmesini bloking olarak dinyelen komut
                 Message received = (Message) (sInput.readObject());
                 //mesaj gelirse bu satıra geçer
                 //mesaj tipine göre yapılacak işlemi ayır.
@@ -43,51 +42,56 @@ class Listen extends Thread {
                         System.out.println("rival connected a girdi");
                         Game.ThisGame.txt_rival_name.setText(name);
                         System.out.println(Game.ThisGame.playerNum);
-                        if(Game.ThisGame.playerNum == 1){
-                        Game.ThisGame.button1.setEnabled(true);
-                        Game.ThisGame.button2.setEnabled(true);
-                        Game.ThisGame.button3.setEnabled(true);
-                        Game.ThisGame.button4.setEnabled(true);
-                        Game.ThisGame.button5.setEnabled(true);
-                        Game.ThisGame.button6.setEnabled(true);
-                        Game.ThisGame.button7.setEnabled(true);
-                        //label1 : sizin sıranız!
+                        if (Game.ThisGame.playerNum == 1) {
+                            Game.ThisGame.button1.setEnabled(true);
+                            Game.ThisGame.button2.setEnabled(true);
+                            Game.ThisGame.button3.setEnabled(true);
+                            Game.ThisGame.button4.setEnabled(true);
+                            Game.ThisGame.button5.setEnabled(true);
+                            Game.ThisGame.button6.setEnabled(true);
+                            Game.ThisGame.button7.setEnabled(true);
+                            //label1 : sizin sıranız!
                         }
-                        if(Game.ThisGame.playerNum ==2){
-                        //label2 : rakibinizin hamle yapması bekleniyor...
+                        if (Game.ThisGame.playerNum == 2) {
+                            //label2 : rakibinizin hamle yapması bekleniyor...
                         }
-                        
+
                         //jOptionPane oyun başladı yazısı yazdır!!!
                         //Game.ThisGame.btn_send_message.setEnabled(true);
-                         Game.ThisGame.tmr_slider.start();
+                        Game.ThisGame.tmr_slider.start();
                         break;
                     case Disconnect:
                         break;
                     case Color:
-                        System.out.println("Color case'ine girdi!!!!!!");
                         Color c = (Color) received.content;
-                        System.out.println(c);
                         Game.ThisGame.myColor = c;
                         break;
                     case Text:
-                      // Game.ThisGame.txt_receive.setText(received.content.toString());
+                        // Game.ThisGame.txt_receive.setText(received.content.toString());
                         break;
                     case Board:
-                       Game.ThisGame.boardStates = (int[][]) received.content;
-                       break;
+                        Game.ThisGame.boardStates = (int[][]) received.content;
+                        break;
                     case Point:
-                        
+                        //rakibin hamlesini çizdirmek için
                         Game.ThisGame.rivalPoint = (java.awt.Point) received.content;
                         break;
                     case PlayerNum:
-                        System.out.println("player numbera girdi!");
+                        System.out.println("player number! :" + (int) received.content);
                         Game.ThisGame.playerNum = (int) received.content;
+                        break;
+                    case Move:
+                        //rakibe toplam hamle sayısını gönderir
+                        Game.ThisGame.numberOfMove = (int) received.content;
+                        break;
+                    case Turn:
+                        Game.ThisGame.rivalTurn = (int) received.content;
                         break;
                     case Bitis:
                         break;
 
                 }
-           } catch (IOException ex) {
+            } catch (IOException ex) {
 
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 //Client.Stop();
@@ -101,8 +105,9 @@ class Listen extends Thread {
 
     }
 }
+
 public class Client {
-  
+
     //her clientın bir soketi olmalı
     public static Socket socket;
 
@@ -112,8 +117,7 @@ public class Client {
     public static ObjectOutputStream sOutput;
     //serverı dinleme thredi 
     public static Listen listenMe;
-    
-    
+
     public static void Start(String ip, int port) {
         try {
             // Client Soket nesnesi
@@ -121,15 +125,15 @@ public class Client {
             Client.Display("Servera bağlandı");
             // input stream
             Client.sInput = new ObjectInputStream(Client.socket.getInputStream());
-           // output stream
+            // output stream
             Client.sOutput = new ObjectOutputStream(Client.socket.getOutputStream());
             Client.listenMe = new Listen();
             Client.listenMe.start();
-           //ilk mesaj olarak isim gönderiyorum
+            //ilk mesaj olarak isim gönderiyorum
             Message msg = new Message(Message.Message_Type.Name);
             msg.content = Game.ThisGame.txt_name.getText();
             Client.Send(msg);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
