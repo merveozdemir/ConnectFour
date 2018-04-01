@@ -10,6 +10,7 @@ import game.Game;
 import game.Message;
 
 import java.awt.Color;
+import java.awt.Image;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,7 +18,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -50,14 +53,19 @@ class Listen extends Thread {
                             Game.ThisGame.button5.setEnabled(true);
                             Game.ThisGame.button6.setEnabled(true);
                             Game.ThisGame.button7.setEnabled(true);
-                            //label1 : sizin sıranız!
+                            Game.ThisGame.label_myColor.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("/images/red_coin.png"))).getImage().getScaledInstance(Game.ThisGame.label_myColor.getWidth(), Game.ThisGame.label_myColor.getHeight(), Image.SCALE_DEFAULT)));
+                            
+                            Game.ThisGame.panel_message.setVisible(true);
+                            Game.ThisGame.label_message.setText("Oyun Başladı. Sizin Sıranız!");
+                            
                         }
                         if (Game.ThisGame.playerNum == 2) {
-                            //label2 : rakibinizin hamle yapması bekleniyor...
+                            Game.ThisGame.label_myColor.setIcon(new ImageIcon(new ImageIcon(ImageIO.read(this.getClass().getResource("/images/blue_coin.png"))).getImage().getScaledInstance(Game.ThisGame.label_myColor.getWidth(), Game.ThisGame.label_myColor.getHeight(), Image.SCALE_DEFAULT)));
+                            Game.ThisGame.panel_message.setVisible(true);
+                            Game.ThisGame.label_message.setText("Oyun Başladı. Rakibinizin hamle yapması bekleniyor!");
+                            
                         }
 
-                        //jOptionPane oyun başladı yazısı yazdır!!!
-                        //Game.ThisGame.btn_send_message.setEnabled(true);
                         Game.ThisGame.tmr_slider.start();
                         break;
                     case Disconnect:
@@ -86,6 +94,9 @@ class Listen extends Thread {
                         break;
                     case Turn:
                         Game.ThisGame.rivalTurn = (int) received.content;
+                        break;
+                    case Winner:
+                        Game.ThisGame.RivalVictory = (int)received.content;
                         break;
                     case Bitis:
                         break;

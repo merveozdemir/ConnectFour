@@ -117,6 +117,9 @@ public class SClient {
                         case Turn:
                             Server.Send(TheClient.rival, received);
                             break;
+                        case Winner:
+                            Server.Send(TheClient.rival, received);
+                            break;
                         case Bitis:
                             break;
 
