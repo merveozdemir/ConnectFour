@@ -71,6 +71,7 @@ class Listen extends Thread {
                     case Disconnect:
                         break;
                     case Color:
+                        //player'ın rengini gönderir
                         Color c = (Color) received.content;
                         Game.ThisGame.myColor = c;
                         break;
@@ -93,9 +94,11 @@ class Listen extends Thread {
                         Game.ThisGame.numberOfMove = (int) received.content;
                         break;
                     case Turn:
+                        //rakibin oynamasını tetikler
                         Game.ThisGame.rivalTurn = (int) received.content;
                         break;
                     case Winner:
+                        //kazanan bilgisi
                         Game.ThisGame.RivalVictory = (int)received.content;
                         break;
                     case Bitis:

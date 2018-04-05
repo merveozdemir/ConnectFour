@@ -5,13 +5,13 @@ package connectfourserver;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author merve
  */
 public class ConnectFourServer {
+
     public static void main(String[] args) {
-         Server.Start(2000);
+        Server.Start(2000);
     }
 }

@@ -7,6 +7,7 @@ package game;
 
 import connectfourclient.Client;
 import java.awt.Color;
+import java.awt.Font;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -53,8 +54,8 @@ public class Game extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Connect Four");
         ThisGame = this;
-        locations = new Point[7][6];
-        boardStates = new int[7][6];
+        locations = new Point[7][6];    //circle location
+        boardStates = new int[7][6];   //hamle matrisi
         panel_message.setVisible(false);
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
@@ -73,91 +74,117 @@ public class Game extends javax.swing.JFrame {
                     Thread.sleep(1500);
                     panel_message.setVisible(false);
 
-                    if (playerNum == 1) {
+                    if (playerNum == 1) { //1.oyuncu
                         if (numberOfMove == 0) {
+                            label_turnMsg.setText("Sıra \n Sizde!");
                             unlockTheButtons();
+                        } else if (numberOfMove == 42 && myVictory != 1 && RivalVictory != 1) {
+                            label_turnMsg.setText("KAYBETTİNİZ!");
+                            int answer = JOptionPane.showConfirmDialog(null, "Daha fazla hamle yok! Yeniden oynamak istiyor musunuz?", null, 0, JOptionPane.QUESTION_MESSAGE);
+                            Reset();
+                            if (answer == JOptionPane.YES_OPTION) {
+                                startNewGame();
+                            }
+
+                            tmr_slider.stop();
+
                         } else {
-                            if (rivalTurn == 1) {
+                            if (rivalTurn == 1) { //rakibin sırasıysa
                                 lockTheButtons();
-                                if (myVictory == 1) {
-
-                                    System.out.println("You win!!");
-                                    panel_message.setVisible(true);
-                                    label_message.setText("Tebrikler. Kazandınız!");
-                                    Thread.sleep(2000);
-                                    panel_message.setVisible(false);
-
+                                if (myVictory == 1) { //kendi kazandıysa
+                                    label_turnMsg.setText("TEBRİKLER!");
+                                    int answer = JOptionPane.showConfirmDialog(null, "Tebrikler! Yeniden oynamak istiyor musunuz?", null, 0, JOptionPane.QUESTION_MESSAGE);
+                                    Reset();
+                                    if (answer == JOptionPane.YES_OPTION) {
+                                        startNewGame();
+                                    }
+                                    tmr_slider.stop();
                                 }
                                 drawControl1 = 0;
-                            } else if (rivalTurn == 0 && drawControl1 == 0) {
+                                label_turnMsg.setText("Sıra \n Rakipte!");
+                            } else if (rivalTurn == 0 && drawControl1 == 0) { //kendi sırasıysa
                                 drawControl1 = 1;
-
+                                //rakibin hamlesini çizdirme
                                 movingCircle m = new movingCircle(rivalPoint, Color.blue);
                                 m.setOpaque(false);
                                 m.setVisible(true);
                                 m.setSize(this.getWidth(), this.getHeight());
                                 ThisGame.add(m);
 
+                                label_turnMsg.setText("Sıra \n Sizde!");
                                 unlockTheButtons();
 
                             }
                             //is rival connect four?
-                            if (RivalVictory == 1) {
+                            if (RivalVictory == 1) { //rakip kazandıysa
                                 Thread.sleep(2000);
                                 System.out.println("Rival wins!!");
-                                panel_message.setVisible(true);
-                                label_message.setText("Kaybettiniz!");
-                                Thread.sleep(2000);
-                                panel_message.setVisible(false);
+                                label_turnMsg.setText("KAYBETTİNİZ!");
+                                Reset();
+                                int answer = JOptionPane.showConfirmDialog(null, "Kaybettiniz! Yeniden oynamak istiyor musunuz?", null, 0, JOptionPane.QUESTION_MESSAGE);
+                                if (answer == JOptionPane.YES_OPTION) {
+                                    startNewGame();
+                                }
+
                                 lockTheButtons();
-                                break;
+                                tmr_slider.stop();
                             }
                         }
-                    } else if (playerNum == 2) {
+                    } else if (playerNum == 2) { //2.oyuncu
 
                         if (numberOfMove == 0) {
                             lockTheButtons();
-                        } else {
-                            if (rivalTurn == 0 && drawControl2 == 0) {
-                                drawControl2 = 1;
+                            label_turnMsg.setText("Sıra \n Rakipte!");
+                        } else if (numberOfMove == 42 && myVictory != 1 && RivalVictory != 1) { //toplam hamle sayısı
+                            label_turnMsg.setText("KAYBETTİNİZ!");
+                            Reset();
+                            int answer = JOptionPane.showConfirmDialog(null, "Daha fazla hamle yok! Yeniden oynamak istiyor musunuz?", null, 0, JOptionPane.QUESTION_MESSAGE);
+                            if (answer == JOptionPane.YES_OPTION) {
+                                startNewGame();
+                            }
 
+                            tmr_slider.stop();
+                        } else {
+                            if (rivalTurn == 0 && drawControl2 == 0) { //kendi sırasıysa
+                                drawControl2 = 1;
+                                //rakibin hamlesini çizdirme
                                 movingCircle m = new movingCircle(rivalPoint, Color.red);
                                 m.setOpaque(false);
                                 m.setVisible(true);
                                 m.setSize(this.getWidth(), this.getHeight());
                                 ThisGame.add(m);
 
+                                label_turnMsg.setText("Sıra \n Sizde!");
                                 unlockTheButtons();
 
-                            } else if (rivalTurn == 1) {
+                            } else if (rivalTurn == 1) { //rakibin sırasıysa
                                 drawControl2 = 0;
                                 lockTheButtons();
-                                if (myVictory == 1) {
+                                if (myVictory == 1) { //kendi kazandıysa
                                     System.out.println("You win!!");
-                                  //  JOptionPane.showMessageDialog(null, "Kazandınız!", "Tebrikler!", JOptionPane.INFORMATION_MESSAGE);
-                                   // JOptionPane.showConfirmDialog(null, "Yeniden oynamak istiyor musunuz?",null,0,JOptionPane.QUESTION_MESSAGE);
-                                    panel_message.setVisible(true);
-                                    label_message.setText("Tebrikler. Kazandınız!");
-                                    Thread.sleep(2000);
-                                    panel_message.setVisible(false);
-
+                                    Reset();
+                                    label_turnMsg.setText("TEBRİKLER!");
+                                    int answer = JOptionPane.showConfirmDialog(null, "Tebrikler! Yeniden oynamak istiyor musunuz?", null, 0, JOptionPane.QUESTION_MESSAGE);
+                                    if (answer == JOptionPane.YES_OPTION) {
+                                        startNewGame();
+                                    }
+                                    tmr_slider.stop();
                                 }
-
+                                label_turnMsg.setText("Sıra \n Rakipte!");
                             }
                             //is rival connect four?
-                            if (RivalVictory == 1 && drawControl2 == 1) {
+                            if (RivalVictory == 1 && drawControl2 == 1) { //rakip kazandıysa
                                 Thread.sleep(2000);
-                                System.out.println("Rival wins!!");
-                                panel_message.setVisible(true);
-                                label_message.setText("Kaybettiniz!");
-                                Thread.sleep(2000);
-                                panel_message.setVisible(false);
+                                label_turnMsg.setText("Kaybettiniz!");
+                                Reset();
+                                int answer = JOptionPane.showConfirmDialog(null, "Kaybettiniz! Yeniden oynamak istiyor musunuz?", null, 0, JOptionPane.QUESTION_MESSAGE);
+                                if (answer == JOptionPane.YES_OPTION) {
+                                    startNewGame();
+                                }
                                 lockTheButtons();
+                                tmr_slider.stop();
                             }
                         }
-
-                        //Thread.sleep(7000);
-                        //Reset();
                     }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
@@ -191,6 +218,8 @@ public class Game extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         label_myColor = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        label_turnMsg = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -335,6 +364,25 @@ public class Game extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel2.setPreferredSize(new java.awt.Dimension(143, 130));
+
+        label_turnMsg.setFont(new java.awt.Font("Noto Sans", 1, 20)); // NOI18N
+        label_turnMsg.setForeground(new java.awt.Color(50, 204, 219));
+        label_turnMsg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(69, 199, 214), 3, true));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_turnMsg, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(label_turnMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         jLabel1.setBackground(new java.awt.Color(199, 199, 199));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/board.png"))); // NOI18N
         jLabel1.setLabelFor(this);
@@ -346,37 +394,40 @@ public class Game extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(422, 422, 422)
                 .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(128, 128, 128)
-                .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
+                .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(180, 180, 180)
+                .addComponent(panel_message, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(692, 692, 692)
                 .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(242, 242, 242)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(602, 602, 602)
+                .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(910, 910, 910)
                 .addComponent(txt_rival_name, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(connect_button, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(782, 782, 782)
-                .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(350, 350, 350)
-                .addComponent(panel_message, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(connect_button, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(332, 332, 332)
                 .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(512, 512, 512)
-                .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(242, 242, 242)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(782, 782, 782)
+                .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jLabel1)
         );
         layout.setVerticalGroup(
@@ -384,30 +435,49 @@ public class Game extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
-                .addComponent(txt_rival_name, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(connect_button, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(270, 270, 270)
+                .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panel_message, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(430, 430, 430)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txt_rival_name, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(panel_message, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(120, 120, 120)
+                .addComponent(connect_button, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public void Reset() {
+        if (Client.socket != null) {
+            if (Client.socket.isConnected()) {
+                Client.Stop();
+            }
+        }
 
+    }
+
+    public void startNewGame() {
+        this.setVisible(false);
+        Game g = new Game();
+        g.setVisible(true);
+    }
+     
     public class movingCircle extends JPanel implements ActionListener {
 
         Timer t = new Timer(0, this);
@@ -493,24 +563,26 @@ public class Game extends javax.swing.JFrame {
     }
 
     public void sendMessagesToRival() {
-        Message msg = new Message(Message.Message_Type.Board);
+        Message msg = new Message(Message.Message_Type.Board);  //hamle matrisi
         msg.content = boardStates;
         Client.Send(msg);
 
-        Message msg2 = new Message(Message.Message_Type.Point);
+        Message msg2 = new Message(Message.Message_Type.Point); //rakibin hamlesinin lokasyonu
         msg2.content = myPoint;
         Client.Send(msg2);
 
-        Message msg3 = new Message(Message.Message_Type.Move);
+        Message msg3 = new Message(Message.Message_Type.Move); //toplam hamle sayısı
         msg3.content = numberOfMove;
         Client.Send(msg3);
 
-        Message msg4 = new Message(Message.Message_Type.Turn);
+        Message msg4 = new Message(Message.Message_Type.Turn); //rakibe hamle yapması için tetik
         msg4.content = myTurn;
         Client.Send(msg4);
     }
 
     public boolean isConnenctFour() {
+        //board kontrol 
+        
         int value = boardStates[myColumn][myRow];
         int counter = 0;
         int i = myRow;
@@ -584,7 +656,7 @@ public class Game extends javax.swing.JFrame {
 
         myColumn = 0;
 
-        if (isPlayable(myColumn)) {
+        if (isPlayable(myColumn)) {  //kolon boş ise
             drawTheMove(myColumn);
             sendMessagesToRival();
             if (isConnenctFour()) {
@@ -594,8 +666,7 @@ public class Game extends javax.swing.JFrame {
                 Client.Send(msg);
             }
         } else {
-            //this column is full, try another one
-
+            label_turnMsg.setText("Bu kolon dolu!");
         }
 
 
@@ -613,7 +684,7 @@ public class Game extends javax.swing.JFrame {
                 Client.Send(msg);
             }
         } else {
-            //this column is full, try another one
+            label_turnMsg.setText("Bu kolon dolu!");
         }
     }//GEN-LAST:event_button4ActionPerformed
 
@@ -630,7 +701,7 @@ public class Game extends javax.swing.JFrame {
                 Client.Send(msg);
             }
         } else {
-            //this column is full, try another one
+           label_turnMsg.setText("Bu kolon dolu!");
         }
     }//GEN-LAST:event_button3ActionPerformed
 
@@ -656,7 +727,7 @@ public class Game extends javax.swing.JFrame {
                 Client.Send(msg);
             }
         } else {
-            //this column is full, try another one
+           label_turnMsg.setText("Bu kolon dolu!");
         }
 
     }//GEN-LAST:event_button2ActionPerformed
@@ -674,7 +745,7 @@ public class Game extends javax.swing.JFrame {
                 Client.Send(msg);
             }
         } else {
-            //this column is full, try another one
+            label_turnMsg.setText("Bu kolon dolu!");
         }
     }//GEN-LAST:event_button5ActionPerformed
 
@@ -691,7 +762,7 @@ public class Game extends javax.swing.JFrame {
                 Client.Send(msg);
             }
         } else {
-            //this column is full, try another one
+            label_turnMsg.setText("Bu kolon dolu!");
         }
     }//GEN-LAST:event_button6ActionPerformed
 
@@ -708,7 +779,7 @@ public class Game extends javax.swing.JFrame {
                 Client.Send(msg);
             }
         } else {
-            //this column is full, try another one
+            label_turnMsg.setText("Bu kolon dolu!");
         }
     }//GEN-LAST:event_button7ActionPerformed
 
@@ -759,8 +830,10 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     public javax.swing.JLabel label_message;
     public javax.swing.JLabel label_myColor;
+    private javax.swing.JLabel label_turnMsg;
     public javax.swing.JPanel panel_message;
     public javax.swing.JTextField txt_name;
     public javax.swing.JTextField txt_rival_name;

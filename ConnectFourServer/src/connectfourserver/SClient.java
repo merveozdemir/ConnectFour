@@ -184,6 +184,7 @@ public class SClient {
                         //her iki tarafada eşleşme mesajı gönder 
                         //oyunu başlat
                        
+                        //renkleri ve player num belirleme
                         System.out.println(TheClient.id +" - " + TheClient.rival.id);
                         if(TheClient.id < TheClient.rival.id){
                             TheClient.color = Color.red;
@@ -198,6 +199,8 @@ public class SClient {
                             TheClient.rival.playerNum = 1;
                            
                         }
+                        
+                        //player num ve renkleri gönderme
                         Message msg5 = new Message(Message.Message_Type.PlayerNum);
                         msg5.content = TheClient.playerNum;
                         Server.Send(TheClient, msg5);

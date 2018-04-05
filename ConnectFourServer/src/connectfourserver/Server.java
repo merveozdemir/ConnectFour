@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author merve
+ * @author INSECT
  */
 //client gelişini dinleme threadi
 class ServerThread extends Thread {
