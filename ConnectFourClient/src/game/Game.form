@@ -24,36 +24,22 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="422" pref="422" max="-2" attributes="0"/>
+              <EmptySpace min="332" pref="332" max="-2" attributes="0"/>
+              <Component id="button2" min="-2" pref="52" max="-2" attributes="0"/>
+              <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
               <Component id="button3" min="-2" pref="52" max="-2" attributes="0"/>
               <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
               <Component id="button4" min="-2" pref="52" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-              <Component id="txt_name" min="-2" pref="130" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" pref="140" max="-2" attributes="0"/>
-              <EmptySpace min="180" pref="180" max="-2" attributes="0"/>
-              <Component id="panel_message" min="-2" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="692" pref="692" max="-2" attributes="0"/>
+              <EmptySpace min="128" pref="128" max="-2" attributes="0"/>
               <Component id="button6" min="-2" pref="52" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="242" pref="242" max="-2" attributes="0"/>
-              <Component id="button1" min="-2" pref="52" max="-2" attributes="0"/>
+              <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
+              <Component id="button7" min="-2" pref="52" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
               <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" pref="140" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="602" pref="602" max="-2" attributes="0"/>
-              <Component id="button5" min="-2" pref="52" max="-2" attributes="0"/>
+              <Component id="jLabel4" min="-2" pref="130" max="-2" attributes="0"/>
+              <EmptySpace min="750" pref="750" max="-2" attributes="0"/>
+              <Component id="jLabel3" min="-2" pref="130" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
               <EmptySpace min="910" pref="910" max="-2" attributes="0"/>
@@ -64,12 +50,26 @@
               <Component id="connect_button" min="-2" pref="130" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
-              <EmptySpace min="332" pref="332" max="-2" attributes="0"/>
-              <Component id="button2" min="-2" pref="52" max="-2" attributes="0"/>
+              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+              <Component id="jPanel2" min="-2" pref="140" max="-2" attributes="0"/>
+              <EmptySpace min="180" pref="180" max="-2" attributes="0"/>
+              <Component id="panel_message" min="-2" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
-              <EmptySpace min="782" pref="782" max="-2" attributes="0"/>
-              <Component id="button7" min="-2" pref="52" max="-2" attributes="0"/>
+              <EmptySpace min="242" pref="242" max="-2" attributes="0"/>
+              <Component id="button1" min="-2" pref="52" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="602" pref="602" max="-2" attributes="0"/>
+              <Component id="button5" min="-2" pref="52" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" pref="140" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+              <Component id="txt_name" min="-2" pref="130" max="-2" attributes="0"/>
           </Group>
           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
       </Group>
@@ -78,12 +78,21 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="button2" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="button3" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="button4" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="button6" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="button7" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel4" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jLabel3" min="-2" pref="30" max="-2" attributes="0"/>
+              </Group>
+              <Component id="txt_rival_name" min="-2" pref="40" max="-2" attributes="0"/>
+              <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+              <Component id="connect_button" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-              <Component id="txt_name" min="-2" pref="40" max="-2" attributes="0"/>
-              <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
@@ -92,23 +101,16 @@
                   <Component id="panel_message" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
-          <Component id="button6" min="-2" pref="20" max="-2" attributes="0"/>
           <Component id="button1" min="-2" pref="20" max="-2" attributes="0"/>
+          <Component id="button5" min="-2" pref="20" max="-2" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace min="430" pref="430" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
           </Group>
-          <Component id="button5" min="-2" pref="20" max="-2" attributes="0"/>
           <Group type="102" attributes="0">
               <EmptySpace min="60" pref="60" max="-2" attributes="0"/>
-              <Component id="txt_rival_name" min="-2" pref="40" max="-2" attributes="0"/>
+              <Component id="txt_name" min="-2" pref="40" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="120" pref="120" max="-2" attributes="0"/>
-              <Component id="connect_button" min="-2" pref="40" max="-2" attributes="0"/>
-          </Group>
-          <Component id="button2" min="-2" pref="20" max="-2" attributes="0"/>
-          <Component id="button7" min="-2" pref="20" max="-2" attributes="0"/>
           <Component id="jLabel1" min="-2" pref="610" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -438,10 +440,10 @@
         <Component class="javax.swing.JLabel" name="label_turnMsg">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Noto Sans" size="20" style="1"/>
+              <Font name="Noto Sans" size="16" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="db" green="cc" red="32" type="rgb"/>
+              <Color blue="b4" green="a8" red="2e" type="rgb"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -454,6 +456,28 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Noto Sans" size="18" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fe" green="fe" red="fe" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Siz:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Noto Sans" size="18" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fe" green="fe" red="fe" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Rakibiniz:"/>
+      </Properties>
+    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">

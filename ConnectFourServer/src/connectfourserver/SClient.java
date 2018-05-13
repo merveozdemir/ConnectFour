@@ -18,7 +18,7 @@ import static game.Message.Message_Type.Board;
 
 /**
  *
- * @author INSECT
+ * @author merve
  */
 public class SClient {
 
