@@ -65,11 +65,11 @@ public class Game extends javax.swing.JFrame {
         panel_message.setVisible(true);
         label_message.setText("Lütfen isminizi girip Connect butonuna basınız");
         panel_message.setVisible(true);
-        
+
         ThisGame = this;
         locations = new Point[7][6];    //circle location
         boardStates = new int[7][6];   //hamle matrisi
-     //   panel_message.setVisible(false);
+        //   panel_message.setVisible(false);
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 6; j++) {
                 boardStates[i][j] = 0;
@@ -177,7 +177,7 @@ public class Game extends javax.swing.JFrame {
                                 }
                                 label_turnMsg.setText("Sıra \n Rakipte!");
                             }
-                           if (numberOfMove == 42 && myVictory != 1 && RivalVictory != 1) { //toplam hamle sayısı
+                            if (numberOfMove == 42 && myVictory != 1 && RivalVictory != 1) { //toplam hamle sayısı
                                 label_turnMsg.setText("KAYBETTİNİZ!");
                                 Reset();
                                 int answer = JOptionPane.showConfirmDialog(null, "Daha fazla hamle yok! Yeniden oynamak istiyor musunuz?", null, 0, JOptionPane.QUESTION_MESSAGE);
@@ -568,7 +568,19 @@ public class Game extends javax.swing.JFrame {
         Game.ThisGame.button6.setEnabled(true);
         Game.ThisGame.button7.setEnabled(true);
     }
-
+    public void makeTheMove(int myColumn){
+        if (isPlayable(myColumn)) {  //kolon boş ise
+            drawTheMove(myColumn);
+            sendMessagesToRival();
+            if (isConnenctFour()) {
+                myVictory = 1;
+                sendWinMessage();
+            }
+        } else {
+            label_turnMsg.setText("Bu kolon dolu!");
+        }
+    
+    }
     public void drawTheMove(int myColumn) {
 
         for (int i = 5; i >= 0; i--) {
@@ -609,6 +621,12 @@ public class Game extends javax.swing.JFrame {
         Client.Send(msg4);
     }
 
+    public void sendWinMessage() {
+        Message msg = new Message(Message.Message_Type.Winner);
+        msg.content = myVictory;
+        Client.Send(msg);
+    }
+   
     public boolean isConnenctFour() {
         //board kontrol 
 
@@ -684,60 +702,55 @@ public class Game extends javax.swing.JFrame {
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
 
         myColumn = 0;
-
-        if (isPlayable(myColumn)) {  //kolon boş ise
-            drawTheMove(myColumn);
-            sendMessagesToRival();
-            if (isConnenctFour()) {
-                myVictory = 1;
-                Message msg = new Message(Message.Message_Type.Winner);
-                msg.content = myVictory;
-                Client.Send(msg);
-            }
-        } else {
-            label_turnMsg.setText("Bu kolon dolu!");
-        }
+        makeTheMove(myColumn);
+//        if (isPlayable(myColumn)) {  //kolon boş ise
+//            drawTheMove(myColumn);
+//            sendMessagesToRival();
+//            if (isConnenctFour()) {
+//                myVictory = 1;
+//                sendWinMessage();
+//            }
+//        } else {
+//            label_turnMsg.setText("Bu kolon dolu!");
+//        }
 
 
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
         myColumn = 3;
-        if (isPlayable(myColumn)) {
-            drawTheMove(myColumn);
-            sendMessagesToRival();
-            if (isConnenctFour()) {
-                myVictory = 1;
-                Message msg = new Message(Message.Message_Type.Winner);
-                msg.content = myVictory;
-                Client.Send(msg);
-            }
-        } else {
-            label_turnMsg.setText("Bu kolon dolu!");
-        }
+         makeTheMove(myColumn);
+//        if (isPlayable(myColumn)) {
+//            drawTheMove(myColumn);
+//            sendMessagesToRival();
+//            if (isConnenctFour()) {
+//                myVictory = 1;
+//               sendWinMessage();
+//            }
+//        } else {
+//            label_turnMsg.setText("Bu kolon dolu!");
+//        }
     }//GEN-LAST:event_button4ActionPerformed
 
     private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
         myColumn = 2;
-
-        if (isPlayable(myColumn)) {
-            drawTheMove(myColumn);
-            sendMessagesToRival();
-            if (isConnenctFour()) {
-                myVictory = 1;
-                Message msg = new Message(Message.Message_Type.Winner);
-                msg.content = myVictory;
-                Client.Send(msg);
-            }
-        } else {
-            label_turnMsg.setText("Bu kolon dolu!");
-        }
+       makeTheMove(myColumn);
+//        if (isPlayable(myColumn)) {
+//            drawTheMove(myColumn);
+//            sendMessagesToRival();
+//            if (isConnenctFour()) {
+//                myVictory = 1;
+//                sendWinMessage();
+//            }
+//        } else {
+//            label_turnMsg.setText("Bu kolon dolu!");
+//        }
     }//GEN-LAST:event_button3ActionPerformed
 
     private void connect_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_buttonActionPerformed
         Client.Start("127.0.0.1", 2000);
         panel_message.setVisible(false);
-        
+
         label_turnMsg.setText("Rakip bekleniyor");
         connect_button.setEnabled(false);
         txt_name.setEnabled(false);
@@ -747,71 +760,63 @@ public class Game extends javax.swing.JFrame {
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         myColumn = 1;
-
-        if (isPlayable(myColumn)) {
-            drawTheMove(myColumn);
-            sendMessagesToRival();
-            if (isConnenctFour()) {
-                myVictory = 1;
-                Message msg = new Message(Message.Message_Type.Winner);
-                msg.content = myVictory;
-                Client.Send(msg);
-            }
-        } else {
-            label_turnMsg.setText("Bu kolon dolu!");
-        }
+        makeTheMove(myColumn);
+//        if (isPlayable(myColumn)) {
+//            drawTheMove(myColumn);
+//            sendMessagesToRival();
+//            if (isConnenctFour()) {
+//                myVictory = 1;
+//                sendWinMessage();
+//            }
+//        } else {
+//            label_turnMsg.setText("Bu kolon dolu!");
+//        }
 
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
         myColumn = 4;
-
-        if (isPlayable(myColumn)) {
-            drawTheMove(myColumn);
-            sendMessagesToRival();
-            if (isConnenctFour()) {
-                myVictory = 1;
-                Message msg = new Message(Message.Message_Type.Winner);
-                msg.content = myVictory;
-                Client.Send(msg);
-            }
-        } else {
-            label_turnMsg.setText("Bu kolon dolu!");
-        }
+         makeTheMove(myColumn);
+//        if (isPlayable(myColumn)) {
+//            drawTheMove(myColumn);
+//            sendMessagesToRival();
+//            if (isConnenctFour()) {
+//                myVictory = 1;
+//               sendWinMessage();
+//            }
+//        } else {
+//            label_turnMsg.setText("Bu kolon dolu!");
+//        }
     }//GEN-LAST:event_button5ActionPerformed
 
     private void button6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button6ActionPerformed
         myColumn = 5;
-
-        if (isPlayable(myColumn)) {
-            drawTheMove(myColumn);
-            sendMessagesToRival();
-            if (isConnenctFour()) {
-                myVictory = 1;
-                Message msg = new Message(Message.Message_Type.Winner);
-                msg.content = myVictory;
-                Client.Send(msg);
-            }
-        } else {
-            label_turnMsg.setText("Bu kolon dolu!");
-        }
+         makeTheMove(myColumn);
+//        if (isPlayable(myColumn)) {
+//            drawTheMove(myColumn);
+//            sendMessagesToRival();
+//            if (isConnenctFour()) {
+//                myVictory = 1;
+//               sendWinMessage();
+//            }
+//        } else {
+//            label_turnMsg.setText("Bu kolon dolu!");
+//        }
     }//GEN-LAST:event_button6ActionPerformed
 
     private void button7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button7ActionPerformed
         myColumn = 6;
-
-        if (isPlayable(myColumn)) {
-            drawTheMove(myColumn);
-            sendMessagesToRival();
-            if (isConnenctFour()) {
-                myVictory = 1;
-                Message msg = new Message(Message.Message_Type.Winner);
-                msg.content = myVictory;
-                Client.Send(msg);
-            }
-        } else {
-            label_turnMsg.setText("Bu kolon dolu!");
-        }
+         makeTheMove(myColumn);
+//        if (isPlayable(myColumn)) {
+//            drawTheMove(myColumn);
+//            sendMessagesToRival();
+//            if (isConnenctFour()) {
+//                myVictory = 1;
+//               sendWinMessage();
+//            }
+//        } else {
+//            label_turnMsg.setText("Bu kolon dolu!");
+//        }
     }//GEN-LAST:event_button7ActionPerformed
 
     /**
